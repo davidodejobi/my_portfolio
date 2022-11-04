@@ -1,33 +1,23 @@
-import 'package:flutter/material.dart';
-import 'package:portfolio/core/models/portfolio_model.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:portfolio/modules/home/widgets/widgets.dart';
+
+import 'package:portfolio/shared/responsive_builder.dart';
+
+import '../../shared/shared.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          // SilverPersistentHeader()
-          SliverPersistentHeader(
-            delegate: AppbarAnimation(),
-            pinned: true,
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SizedBox(
-                child: Text(
-                  portfolio.description,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-            ),
-          ),
-        ],
+    return const ResponsiveBuilder(
+      mobile: Scaffold(
+        body: ResponsiveBuilder(
+          tablet: TaabletView(),
+          mobile: MobileView(),
+        ),
       ),
     );
   }

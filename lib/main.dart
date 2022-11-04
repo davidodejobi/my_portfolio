@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/modules/Home/home.dart';
+import 'package:provider/provider.dart';
 
 import 'locator.dart';
 import 'core/utils/theme.dart';
-import 'modules/home/home.dart';
+import 'modules/home/view_model/home_provider.dart';
 
 void main() {
   setup();
@@ -14,11 +16,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Buskeit',
-      theme: AppTheme.light(),
-      home: const Home(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => HomeProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Portfolio',
+        theme: AppTheme.light(),
+        home: const Home(),
+      ),
     );
   }
 }
