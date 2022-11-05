@@ -18,13 +18,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => HomeProvider()),
+        ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider()),
+        ChangeNotifierProvider<AppTheme>(create: (_) => AppTheme()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Portfolio',
-        theme: AppTheme.light(),
-        home: const Home(),
+      child: Consumer<AppTheme>(
+        builder: (context, theme, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Portfolio',
+            darkTheme: AppTheme.dark(),
+            theme: AppTheme.light(),
+            themeMode: theme.currentTheme,
+            home: const Home(),
+          );
+        },
       ),
     );
   }

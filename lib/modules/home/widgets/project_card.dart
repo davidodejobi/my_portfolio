@@ -1,45 +1,53 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:portfolio/constant/helper/helper.dart';
+import 'package:portfolio/shared/responsive_builder.dart';
+
+import '../../../core/core.dart';
+import '../../../shared/web_view/web_view.dart';
 
 class ProjectCard extends StatelessWidget {
   final int index;
+  final ProjectModel project;
   const ProjectCard({
     Key? key,
     required this.index,
+    required this.project,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<AppTheme>(context);
+    String preview = project.projectVideo;
     return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
         child: Container(
           width: double.infinity,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white10.withAlpha(80)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.white.withAlpha(100),
-                blurRadius: 10.0,
-                spreadRadius: 0.0,
-              ),
-            ],
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: index.isEven
-                  ? [
-                      const Color(0x0ff4f4f8).withOpacity(0.8),
-                      const Color(0x00b3cde0).withOpacity(0.8),
-                    ]
-                  : [
-                      const Color(0x00b3cde0).withOpacity(0.8),
-                      const Color(0x0ff4f4f8).withOpacity(0.8),
-                    ],
-            ),
-          ),
+          decoration: !ResponsiveBuilder.isTablet(context)
+              ? BoxDecoration(
+                  border: Border.all(
+                      color: theme.isDarkTheme
+                          ? Colors.white10.withAlpha(80)
+                          : Colors.black12.withAlpha(80)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.white.withAlpha(100),
+                      blurRadius: 10.0,
+                      spreadRadius: 0.0,
+                    ),
+                  ],
+                  color: !ResponsiveBuilder.isTablet(context)
+                      ? theme.isDarkTheme
+                          ? Colors.white.withOpacity(0.1)
+                          : Colors.black.withOpacity(0.2)
+                      : Colors.transparent,
+                )
+              : null,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -50,9 +58,9 @@ class ProjectCard extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                        'https://picsum.photos/200/300',
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/images/${project.projectImage}.png',
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -77,7 +85,7 @@ class ProjectCard extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            "Project Name",
+                            project.projectName,
                             style:
                                 Theme.of(context).textTheme.headline5!.copyWith(
                                       color: Colors.white,
@@ -86,35 +94,64 @@ class ProjectCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: 10,
-                        right: 10,
-                        child: Icon(
-                          Icons.video_collection,
-                          color: Theme.of(context).iconTheme.color,
-                        ).glassmorphicx(),
-                      ),
-                      Positioned(
-                        top: 50,
-                        right: 10,
-                        child: Icon(
-                          Icons.link,
-                          color: Theme.of(context).iconTheme.color,
-                        ).glassmorphicx(),
-                      )
+                      if (project.projectVideo.isNotEmpty)
+                        Positioned(
+                          top: 10,
+                          right: 10,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UIWebView(
+                                    title: 'Project Preview',
+                                    url: project.projectVideo,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Icon(
+                              Icons.video_collection,
+                              color: Theme.of(context).iconTheme.color,
+                            ).glassmorphicx(),
+                          ),
+                        ),
+                      if (project.projectGitHubUrl.isNotEmpty)
+                        Positioned(
+                          top: project.projectVideo.isEmpty ? 10 : 50,
+                          right: 10,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UIWebView(
+                                    title: 'Project GitHub',
+                                    url: project.projectGitHubUrl,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Icon(
+                              Icons.link,
+                              color: Theme.of(context).iconTheme.color,
+                            ).glassmorphicx(),
+                          ),
+                        )
                     ],
                   ),
                 ),
               ),
-              Text("One senence Descrpton of what it is and what it is for.",
+              Text(project.projectDescription,
                       style: Theme.of(context).textTheme.headline6)
                   .paddingLTRB(
                 bottom: 10,
+                right: 10,
                 left: 16,
               ),
               Wrap(
                 children: [
-                  for (var i = 0; i < 5; i++)
+                  for (var i = 0; i < project.projectTechStack.length; i++)
                     Container(
                       margin: const EdgeInsets.only(
                         right: 8,
@@ -125,17 +162,23 @@ class ProjectCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        "Flutter",
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
-                              color: Colors.black,
-                            ),
+                        project.projectTechStack[i],
+                        style:
+                            Theme.of(context).textTheme.headline6!.copyWith(),
                       ),
+                    ).paddingLTRB(
+                      bottom: 10,
                     ),
                 ],
               ).paddingLTRB(
                 bottom: 10,
                 left: 16,
               ),
+              if (ResponsiveBuilder.isTablet(context) && index != 3)
+                const Divider().paddingLTRB(
+                  bottom: 10,
+                  right: 16,
+                ),
             ],
           ),
         ),

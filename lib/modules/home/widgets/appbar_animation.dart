@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:portfolio/constant/helper/helper.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
 import '../../../shared/margin.dart';
@@ -20,6 +21,7 @@ class AppbarAnimation extends SliverPersistentHeaderDelegate {
     final size = MediaQuery.of(context).size;
     final currentImageSize =
         (_maxImageSize * (percent + 1)).clamp(_minImageSize, _maxImageSize);
+    final theme = Provider.of<AppTheme>(context);
     return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
@@ -28,13 +30,15 @@ class AppbarAnimation extends SliverPersistentHeaderDelegate {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [
-                const Color(0x0ff4f4f8).withOpacity(0.8),
-                const Color(0x00b3cde0).withOpacity(0.8),
-                //! good for dark mode
-                // const Color(0xFF051e3e).withOpacity(0.8),
-                // const Color(0xFF851e3e).withOpacity(0.8),
-              ],
+              colors: theme.isDarkTheme
+                  ? [
+                      const Color(0xFF851e3e).withOpacity(0.5),
+                      const Color(0xFF091C32).withOpacity(0.8),
+                    ]
+                  : [
+                      const Color(0x00b3cde0).withOpacity(0.8),
+                      const Color(0x0ff4f4f8).withOpacity(0.8),
+                    ],
             ),
           ),
           child: Stack(
@@ -47,7 +51,6 @@ class AppbarAnimation extends SliverPersistentHeaderDelegate {
                       Text(
                         portfolio.name,
                         style: Theme.of(context).textTheme.headline3!.copyWith(
-                              // fontSize: 30.0 + (20 * percent),
                               letterSpacing: 2.0 * (percent + 0.3),
                             ),
                       ),
@@ -66,6 +69,7 @@ class AppbarAnimation extends SliverPersistentHeaderDelegate {
                   child: Row(
                     children: [
                       ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
                           child: Container(
@@ -74,7 +78,7 @@ class AppbarAnimation extends SliverPersistentHeaderDelegate {
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: Colors.white10.withAlpha(80)),
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.white.withAlpha(100),
@@ -185,7 +189,20 @@ class AppbarAnimation extends SliverPersistentHeaderDelegate {
                   bottom: 10.0,
                   top: 10.0,
                 ),
-              )
+              ),
+              Consumer<AppTheme>(builder: (context, theme, child) {
+                return Positioned(
+                  top: 45.0,
+                  right: 5,
+                  child: IconButton(
+                    icon: Icon(
+                      theme.isDarkTheme ? Icons.wb_sunny : Icons.nightlight,
+                      color: Theme.of(context).iconTheme.color,
+                    ),
+                    onPressed: () => theme.toggleTheme(),
+                  ),
+                );
+              }),
             ],
           ),
         ),

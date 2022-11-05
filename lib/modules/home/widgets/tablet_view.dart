@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
 import '../../../shared/shared.dart';
+import '../../../shared/web_view/web_view.dart';
 
 class TaabletView extends StatelessWidget {
   const TaabletView({
@@ -63,6 +64,22 @@ class TaabletView extends StatelessWidget {
                                   bottomLeft: Radius.circular(10),
                                 ),
                               ),
+                              child: Consumer<AppTheme>(
+                                  builder: (context, theme, child) {
+                                return Positioned(
+                                  top: 45.0,
+                                  right: 5,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      theme.isDarkTheme
+                                          ? Icons.wb_sunny
+                                          : Icons.nightlight,
+                                      color: Theme.of(context).iconTheme.color,
+                                    ),
+                                    onPressed: () => theme.toggleTheme(),
+                                  ),
+                                );
+                              }),
                             ),
                           ),
                         ],
@@ -106,6 +123,10 @@ class TaabletView extends StatelessWidget {
             const XMargin(8),
             Expanded(
               child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
                   child: Container(
@@ -157,7 +178,19 @@ class TaabletView extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const UIWebView(
+                                              title: 'LinkedIn',
+                                              url:
+                                                  'https://www.linkedin.com/in/iamdavidodejobi/',
+                                            ),
+                                          ),
+                                        );
+                                      },
                                       child: 'Linkedin'
                                           .image(
                                             size: 30,
@@ -165,7 +198,19 @@ class TaabletView extends StatelessWidget {
                                           .paddingLTRB(right: 5),
                                     ),
                                     GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const UIWebView(
+                                              title: 'Twitter',
+                                              url:
+                                                  'https://twitter.com/iamDavidOdejobi',
+                                            ),
+                                          ),
+                                        );
+                                      },
                                       child: 'Twitter'
                                           .image(
                                             size: 30,
@@ -173,7 +218,19 @@ class TaabletView extends StatelessWidget {
                                           .paddingLTRB(right: 5),
                                     ),
                                     GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const UIWebView(
+                                              title: 'WhatsApp',
+                                              url:
+                                                  'https://api.whatsapp.com/message/E7GPNNX5PJKIH1?autoload=1&app_absent=0',
+                                            ),
+                                          ),
+                                        );
+                                      },
                                       child: 'Whatsapp'
                                           .image(
                                             size: 30,
@@ -181,7 +238,19 @@ class TaabletView extends StatelessWidget {
                                           .paddingLTRB(right: 5),
                                     ),
                                     GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const UIWebView(
+                                              title: 'GitHub',
+                                              url:
+                                                  'https://github.com/davidaodejobi',
+                                            ),
+                                          ),
+                                        );
+                                      },
                                       child: 'Github2'.image(
                                         size: 30,
                                       ),
@@ -234,11 +303,13 @@ class TaabletView extends StatelessWidget {
                                       const YMargin(5),
                                       const YMargin(10),
                                       Text(
-                                        "I am a Product Designer @ Yojonesy. I can help you design your product, develop your brand, or systematize your design flow.",
+                                        portfolio.description,
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline6,
+                                      ).paddingLTRB(
+                                        right: 10,
                                       ),
                                     ],
                                   )
@@ -260,6 +331,7 @@ class TaabletView extends StatelessWidget {
                                       ),
                                       for (int i = 0; i < projects.length; i++)
                                         ProjectCard(
+                                          project: projects[i],
                                           index: i,
                                         ),
                                     ],
