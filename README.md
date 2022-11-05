@@ -56,6 +56,8 @@ There are two main challenges I faced while working on the task:
 - Coming up with a design that I think looks presentable enough.
 - Trying to build a simple, less distracting and classic kind of animation. Combining all of those, even makes it more difficult to build and implement but thanks to Google.
      and Mr. Sleepless nights 🖤).
+
+The other boss challenge is juggling the tasks with other commitments (❁´◡`❁).
 ## Run Locally
 
 Clone the project
