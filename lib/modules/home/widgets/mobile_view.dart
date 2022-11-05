@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/constant/helper/helper.dart';
 import 'package:portfolio/modules/home/widgets/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../core/core.dart';
 import '../../../shared/shared.dart';
@@ -31,11 +32,15 @@ class MobileView extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "Hi there,",
-                            style:
-                                Theme.of(context).textTheme.headline3!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            AppLocalizations.of(context)!.greetings.length > 10
+                                ? '${AppLocalizations.of(context)!.greetings.substring(0, 10)}...'
+                                : AppLocalizations.of(context)!.greetings,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline3!
+                                .copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.fade),
                           ),
                           Image.asset(
                             "assets/animations/wavey.gif",
@@ -119,7 +124,7 @@ class MobileView extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    "I'm ${portfolio.name}.",
+                    AppLocalizations.of(context)!.im(portfolio.name),
                     style: Theme.of(context).textTheme.headline3!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -127,7 +132,7 @@ class MobileView extends StatelessWidget {
                   const YMargin(5),
                   const YMargin(10),
                   Text(
-                    portfolio.description,
+                    AppLocalizations.of(context)!.desc,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ],
@@ -138,7 +143,7 @@ class MobileView extends StatelessWidget {
                 top: 16,
               ),
               Text(
-                "Projects",
+                AppLocalizations.of(context)!.project,
                 style: Theme.of(context).textTheme.headline4!.copyWith(
                       fontWeight: FontWeight.w500,
                     ),

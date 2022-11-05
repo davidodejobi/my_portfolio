@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:portfolio/constant/helper/helper.dart';
+import 'package:portfolio/modules/home/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../core/core.dart';
 import '../../../shared/margin.dart';
@@ -55,7 +57,7 @@ class AppbarAnimation extends SliverPersistentHeaderDelegate {
                             ),
                       ),
                       Text(
-                        portfolio.stack,
+                        AppLocalizations.of(context)!.title,
                         style: Theme.of(context).textTheme.headline6,
                       ),
                     ],
@@ -203,6 +205,11 @@ class AppbarAnimation extends SliverPersistentHeaderDelegate {
                   ),
                 );
               }),
+              const Positioned(
+                top: 46.0,
+                right: 60,
+                child: LanguageSelector(),
+              ),
             ],
           ),
         ),

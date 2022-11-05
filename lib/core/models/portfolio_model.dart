@@ -15,7 +15,7 @@ class PortfolioModel {
 final portfolio = PortfolioModel(
   stack: 'Mobile Developer',
   description:
-      """I'm a creative mobile developer with 2+ years of experience in building mobile applications for Android and iOS. I have worked on a handful of projects, from small to large scale. I have a passion for building great user experiences and I am always looking for new opportunities to learn and grow as a developer.""",
+      """I'm a creative mobile developer with 2+ years of experience building mobile applications for Android and iOS. I have worked on a few different projects, ranging in size from small to large. Not only that, but I have a passion for building great user experiences, and I am always looking for new opportunities to learn and grow as a developer.""",
   image: 'assets/images/pics.jpg',
   name: 'David Odejobi',
 );

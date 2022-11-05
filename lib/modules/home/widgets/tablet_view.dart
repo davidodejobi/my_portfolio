@@ -3,8 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:portfolio/constant/helper/helper.dart';
 import 'package:portfolio/modules/home/view_model/home_provider.dart';
+import 'package:portfolio/modules/home/widgets/language_selector.dart';
 import 'package:portfolio/modules/home/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../core/core.dart';
 import '../../../shared/shared.dart';
@@ -36,13 +38,36 @@ class TaabletView extends StatelessWidget {
                     ],
                   ),
                 ),
-                child: Row(
+                child: Column(
+                  //TODO: need to fix some padding issues here
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 40,
-                      child: Column(
+                    // const SizedBox(height: 50),
+                    const LanguageSelector(),
+                    Consumer<AppTheme>(builder: (context, theme, child) {
+                      return IconButton(
+                        icon: Icon(
+                          theme.isDarkTheme ? Icons.wb_sunny : Icons.nightlight,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        onPressed: () => theme.toggleTheme(),
+                      );
+                    }),
+                    Expanded(
+                      child: Row(
                         children: [
-                          Expanded(
+                          Container(
+                            // height: 20,
+                            decoration: BoxDecoration(
+                              color: Colors.blueGrey,
+                              borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(10),
+                              ),
+                              border: Border.all(
+                                color: Theme.of(context).iconTheme.color!,
+                                width: 1,
+                              ),
+                            ),
                             child: InkWell(
                               onTap: () {
                                 value.changeIndex(0);
@@ -55,59 +80,25 @@ class TaabletView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: Container(
-                              height: 20,
-                              decoration: const BoxDecoration(
-                                color: Colors.blueGrey,
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                ),
+                          Container(
+                            // height: 20,
+                            decoration: BoxDecoration(
+                              color: Colors.blueGrey,
+                              borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(10),
                               ),
-                              child: Consumer<AppTheme>(
-                                  builder: (context, theme, child) {
-                                return Positioned(
-                                  top: 45.0,
-                                  right: 5,
-                                  child: IconButton(
-                                    icon: Icon(
-                                      theme.isDarkTheme
-                                          ? Icons.wb_sunny
-                                          : Icons.nightlight,
-                                      color: Theme.of(context).iconTheme.color,
-                                    ),
-                                    onPressed: () => theme.toggleTheme(),
-                                  ),
-                                );
-                              }),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 40,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 20,
-                              decoration: const BoxDecoration(
-                                color: Colors.blueGrey,
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                ),
+                              border: Border.all(
+                                color: Theme.of(context).iconTheme.color!,
+                                width: 1,
                               ),
                             ),
-                          ),
-                          Expanded(
                             child: InkWell(
                               onTap: () {
                                 value.changeIndex(1);
                               },
                               child: Center(
                                 child: VerticalText(
-                                  'Projects',
+                                  AppLocalizations.of(context)!.project,
                                   style: Theme.of(context).textTheme.headline4!,
                                 ),
                               ),
@@ -170,7 +161,7 @@ class TaabletView extends StatelessWidget {
                                     style:
                                         Theme.of(context).textTheme.headline3),
                                 Text(
-                                  portfolio.stack,
+                                  AppLocalizations.of(context)!.title,
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
                                 const YMargin(10),
@@ -276,7 +267,8 @@ class TaabletView extends StatelessWidget {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "Hi there,",
+                                              AppLocalizations.of(context)!
+                                                  .greetings,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .headline3!
@@ -292,7 +284,8 @@ class TaabletView extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        "I'm ${portfolio.name}.",
+                                        AppLocalizations.of(context)!
+                                            .im(portfolio.name),
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline3!
@@ -303,7 +296,7 @@ class TaabletView extends StatelessWidget {
                                       const YMargin(5),
                                       const YMargin(10),
                                       Text(
-                                        portfolio.description,
+                                        AppLocalizations.of(context)!.desc,
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
@@ -316,7 +309,7 @@ class TaabletView extends StatelessWidget {
                                 : ListView(
                                     children: [
                                       Text(
-                                        "Projects",
+                                        AppLocalizations.of(context)!.project,
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
