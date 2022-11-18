@@ -1,24 +1,31 @@
+env: 
+  FlutterVersion: "3.3.8"
+  FlutterChannel: "stable"
+  JavaVersion: "12.x"
+
 on: 
   pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
-name: Build, and Release apk
+
+name: Continuous Deployment (Build and Release APK)
 jobs:
   build:
-    name: Build APK
+    name: Run on Ubuntu
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-java@v1
       with:
-        java-version: '12.x'
+        java-version: ${{ env.JavaVersion }}
     - uses: subosito/flutter-action@v1
-    - name: Running pub get
+      with:
+        channel: ${{ env.FlutterChannel }}
+        flutter-version: ${{ env.FlutterVersion }}
+    - name: Install dependencies
       run: flutter pub get
-    - name: Building APK
+    - name: Build APK
       run: flutter build apk --debug --split-per-abi
     - name: Create a Release APK
       uses: ncipollo/release-action@v1
