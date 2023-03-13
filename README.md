@@ -3,8 +3,6 @@
 My portfolio is a portfolio app that contains information about me and some projects I've worked on
 
 
-
-
 ## Features
 
 - Automatically get the system mode(dark or light them)
@@ -36,6 +34,7 @@ Get_it: I didn't use it, I thought I will need to do some DI but it was not need
 The portrait mode, uses a Silver app bar, and I used the values gotten while scrolling to move some of the object(something I saw in a tutorial months ago). Other things are pretty much widgets with either a normal container or glasmorphic design.
 
 For the landscape, it something I just thought of from the air, sketched it out and build. Although, there were lots of modification along the way cause there wasn't a design to follow.
+
 ## Feature would like to add ...
 
 - I would have love to fix 2 UI bugs(minor) on the app (1. Text not responding to dark theme text in drop down when selecting localization, 2. In the landscape mode, I wrote a loop to get the project cards and I did something there that wasn't dynamic with kinda wll introduct a divider bug)
@@ -48,17 +47,6 @@ For the landscape, it something I just thought of from the air, sketched it out 
 ## Link to APK file
 
 - [Click to download from drive](https://drive.google.com/file/d/1F8o1q3B1Ukwlx_P0F11WaJqvR2xC0xoD/view?usp=share_link)
-## Challenges
-
-There are two main challenges I faced while working on the task: 
-
-
-- Coming up with a design that I think looks presentable enough.
-- Taking some time out to learn about localization, and integrating it to the app
-- Trying to build a simple, less distracting and classic kind of animation. Combining all of those, even makes it more difficult to build and implement but thanks to Google.
-     and Mr. Sleepless nights 🖤).
-
-The other boss challenge is juggling the tasks with other commitments (❁´◡`❁).
 ## Run Locally
 
 Clone the project
