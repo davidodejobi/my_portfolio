@@ -46,7 +46,7 @@ For the landscape, it something I just thought of from the air, sketched it out 
 - Try to come up with a page for work experience
 ## Link to APK file
 
-- [Click to download from drive](https://drive.google.com/file/d/1F8o1q3B1Ukwlx_P0F11WaJqvR2xC0xoD/view?usp=share_link)
+- [Click to view the app from appetize](https://drive.google.com/file/d/1F8o1q3B1Ukwlx_P0F11WaJqvR2xC0xoD/view?usp=share_link)
 ## Run Locally
 
 Clone the project
